@@ -1,0 +1,37 @@
+{
+    "name": "spimpolari/laravel-simply-grid",
+    "description": "Easy Datatables Grid",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "spimpolari",
+            "email": "spimpolari@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "spimpolari\\LaravelSimplyGrid\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "spimpolari\\LaravelSimplyGrid\\Test\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "spimpolari\\LaravelSimplyGrid\\SimplyGridServiceProvider"
+            ],
+            "aliases": {
+                "SimplyGrid": "spimpolari\\LaravelSimplyGrid\\Facades"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
