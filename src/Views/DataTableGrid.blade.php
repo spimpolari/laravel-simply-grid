@@ -4,23 +4,24 @@
     @endif
     <thead>
     <tr>
-        @if($action === false)
+        @empty($buttons)
             <th>#</th>
-        @endif
+        @endempty
         @foreach($header as $th)
             <th>{{$th}}</th>
         @endforeach
-        @if($action !== false)
-            <th style="width: 240px; text-align: center;">Azioni</th>
-        @endif
+        @isset($buttons)
+            <th style="width: 100px; text-align: center;">Azioni</th>
+        @endisset
     </tr>
     </thead>
     <tbody>
     @foreach($data as $index_row=>$row)
         <tr>
-            @if($action === false)
+            @empty($buttons)
                 <td><input type="radio" value="{{$row->$primaryKey}}" name="id"></td>
-            @endif
+            @endempty
+
             @foreach($column as $option=>$name)
                 <td>
                     @if (isset($special[$name]))
@@ -49,9 +50,15 @@
                         {{ $row->$name }}
                     @endif
                 </td>
-
             @endforeach
-            @if($action !== false)
+
+            @if(isset($buttons))
+                <td style="text-align: center;" class="action">
+                @foreach($buttons as $button)
+                    @include('SimplyGrid::Button')
+                @endforeach
+                </td>
+            @else
                 <td style="text-align: center;" class="action">@include($action)</td>
             @endif
         </tr>

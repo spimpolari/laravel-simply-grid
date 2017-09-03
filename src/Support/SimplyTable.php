@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * 
+ * Class SimplyTable
+ * @package spimpolari\LaravelSimplyGrid\Support
  */
 class SimplyTable {
 
@@ -24,7 +25,7 @@ class SimplyTable {
 
     /**
      * anonimous function for field
-     * @var anonimous function
+     * @var anonymous function
      */
     protected $anon = null;
 
@@ -66,10 +67,21 @@ class SimplyTable {
     protected $action = false;
 
     /**
+     *
+     */
+    protected $buttons = false;
+
+    /**
      * primary key
      * @var string
      */
     protected $primaryKey = 'id';
+
+    /**
+     * @var array
+     */
+    protected $dataTableOptions = [];
+
 
     /**
      * 
@@ -84,7 +96,8 @@ class SimplyTable {
      * @param array $header
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setHeader(array $header) {
+    public function setHeader(array $header)
+    {
         $this->header = $header;
         return $this;
     }
@@ -93,7 +106,8 @@ class SimplyTable {
      * @param $caption
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setCaption(string $caption) {
+    public function setCaption(string $caption)
+    {
         $this->caption = $caption;
         return $this;
     }
@@ -102,7 +116,8 @@ class SimplyTable {
      * @param $css
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setCSS($css) {
+    public function setCSS($css)
+    {
         $this->css = $css;
         return $this;
     }
@@ -111,7 +126,8 @@ class SimplyTable {
      * @param $id
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setID($id) {
+    public function setID($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -120,7 +136,8 @@ class SimplyTable {
      * @param $column
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setColumn($column) {
+    public function setColumn($column)
+    {
         $this->column = $column;
         return $this;
     }
@@ -129,7 +146,8 @@ class SimplyTable {
      * @param $data
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setData(Collection $data) {
+    public function setData(Collection $data)
+    {
         $this->data = $data;
         return $this;
     }
@@ -155,23 +173,60 @@ class SimplyTable {
      * @param $action
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setAction($action) {
+    public function setAction($action)
+    {
         $this->action = $action;
         return $this;
 
     }
 
     /**
+     * @param $action
+     * @param $key
+     * @param $string
+     * @param $class
+     * @param string $description
+     * @return $this
+     */
+    public function setButton($action, $key, $string, $class, $description = '')
+    {
+        $this->buttons[] = ['action' => $action, 'key' => $key, 'string' => $string, 'class' => $class, 'description' => $description];
+        return $this;
+    }
+
+    /**
+     * @param $option
+     * @param $value
+     */
+    public function setDataTableOptions($option, $value)
+    {
+        $this->dataTableOptions[$option] = $value;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDataTableOptions()
+    {
+        return $this->dataTableOptions;
+    }
+
+
+
+
+    /**
      * @return string
      */
-    public function __toString () {
+    public function __toString ()
+    {
         return $this->render ();
     }
 
     /**
      * @return string
      */
-    public function render() {
+    public function render()
+    {
 
         $list_view_var = [
             'data'=>$this->data,
@@ -183,11 +238,12 @@ class SimplyTable {
             'special'=>$this->special,
             'action'=>$this->action,
             'primaryKey'=>$this->primaryKey,
-            'anon'=>$this->anon
+            'anon'=>$this->anon,
+            'buttons'=>$this->buttons
         ];
 
 
-        return (string) View::make('SimplyGrid::DataTableGrid', $list_view_var )->render();
+        return View::make('SimplyGrid::DataTableGrid', $list_view_var )->render();
 
     }
 }
