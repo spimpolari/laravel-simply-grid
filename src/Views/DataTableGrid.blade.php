@@ -17,7 +17,11 @@
     </thead>
     <tbody>
     @foreach($data as $index_row=>$row)
+        @if(isset($customRow))
+            <tr {!! $customRow($row) !!}>
+        @else
         <tr>
+        @endif
             @empty($buttons)
                 <td><input type="radio" value="{{$row->$primaryKey}}" name="id"></td>
             @endempty
@@ -45,6 +49,8 @@
                             @endif
                         @elseif ($special[$name][0] == 'anon')
                             {{ $anon($row->$name) }}
+                        @elseif ($special[$name][0] == 'morph')
+                            {{ $anon($row) }}
                         @endif
                     @else
                         {{ $row->$name }}
@@ -55,7 +61,13 @@
             @if(isset($buttons))
                 <td style="text-align: center;" class="action">
                 @foreach($buttons as $button)
-                    @include('SimplyGrid::Button')
+                    @if(isset($customAction))
+                        @if($customAction($button, $row))
+                            @include('SimplyGrid::Button')
+                        @endif
+                    @else
+                        @include('SimplyGrid::Button')
+                    @endif
                 @endforeach
                 </td>
             @else

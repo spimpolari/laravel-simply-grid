@@ -60,23 +60,27 @@ class SimplyGrid {
     /**
      * @param $tableName
      */
-    public function renderJS($tableName)
+    public function renderJS()
     {
-        $options = $this->table[$tableName]->getDataTableOptions();
+        $render = '<script type="text/javascript">'."\n";
 
-        if(count($options)>0) {
-            $option = '{';
-            foreach ($options as $key => $val) {
-                $option = '"'.$key.'":"'.$val.'"';
+        foreach ($this->table as $tableName => $object) {
+            $options = $object->getDataTableOptions();
+
+            if (count($options) > 0) {
+                $option = '{';
+                foreach ($options as $key => $val) {
+                    $option = '"' . $key . '":"' . $val . '"';
+                }
+                $option = $option . '}';
+            } else {
+                $option = '';
             }
-            $option = $option . '}';
-        } else {
-            $option = '';
+
+            $render .= '$(function(){$("#' . $tableName . '").DataTable(' . $option . ');});'."\n";
         }
 
-        $render = '<script type="text/javascript">$(function(){$("#'.$tableName.'").DataTable('.$option.');});</script>';
-
-        return $render;
+        return $render.'</script>'."\n";
     }
 
 }

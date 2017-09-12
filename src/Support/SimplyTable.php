@@ -49,6 +49,16 @@ class SimplyTable {
     protected $special = [];
 
     /**
+     * @var null
+     */
+    protected $customRow = null;
+
+    /**
+     * @var null
+     */
+    protected $customAction = null;
+
+    /**
      * css clas
      * @var string
      */
@@ -160,12 +170,33 @@ class SimplyTable {
      */
     public function setSpecial($row, $option, $config = null)
     {
-        if($option === 'anon') {
+        if($option === 'anon' || $option === 'morph') {
             $this->anon = $config;
             $this->special[$row] = array($option);
         } else {
             $this->special[$row] = array($option, $config);
         }
+        return $this;
+    }
+
+    /**
+     * @param $config
+     */
+    public function setCustomRow($config)
+    {
+        $this->customRow = $config;
+
+        return $this;
+    }
+
+
+    /**
+     * @param $config
+     */
+    public function setCustomAction($config)
+    {
+        $this->customAction = $config;
+
         return $this;
     }
 
@@ -239,7 +270,9 @@ class SimplyTable {
             'action'=>$this->action,
             'primaryKey'=>$this->primaryKey,
             'anon'=>$this->anon,
-            'buttons'=>$this->buttons
+            'buttons'=>$this->buttons,
+            'customRow'=>$this->customRow,
+            'customAction'=>$this->customAction
         ];
 
 
