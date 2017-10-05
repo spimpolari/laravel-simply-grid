@@ -48,8 +48,6 @@
                                 {{ $row->$name }}
                             @endif
                         @elseif ($special[$name][0] == 'anon')
-                            {{ $anon($row->$name) }}
-                        @elseif ($special[$name][0] == 'morph')
                             {{ $anon($row) }}
                         @endif
                     @else
