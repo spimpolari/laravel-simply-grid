@@ -5,7 +5,9 @@
     <thead>
     <tr>
         @empty($buttons)
+            @isset($primaryKey)
             <th>#</th>
+            @endisset
         @endempty
         @foreach($header as $th)
             <th>{{$th}}</th>
@@ -23,7 +25,9 @@
         <tr>
         @endif
             @empty($buttons)
+                @isset($primaryKey)
                 <td><input type="radio" value="{{$row->$primaryKey}}" name="id"></td>
+                @endisset
             @endempty
 
             @foreach($fields as $option=>$name)
@@ -69,7 +73,9 @@
                 @endforeach
                 </td>
             @else
+                @isset($action)
                 <td style="text-align: center;" class="action">@include($action)</td>
+                @endisset
             @endif
         </tr>
     @endforeach

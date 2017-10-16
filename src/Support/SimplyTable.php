@@ -64,28 +64,23 @@ class SimplyTable {
      */
     protected $css = '';
 
-    /**
-     * id html property
-     * @var string
-     */
-    protected $id = '';
 
     /**
      * as buttton link or radio
      * @var boolean
      */
-    protected $action = false;
+    protected $action = null;
 
     /**
      *
      */
-    protected $buttons = false;
+    protected $buttons = null;
 
     /**
      * primary key
      * @var string
      */
-    protected $primaryKey = 'id';
+    protected $primaryKey = null;
 
     /**
      * @var array
@@ -136,9 +131,9 @@ class SimplyTable {
      * @param $id
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setID($id)
+    public function setPrimaryKey($id = 'id')
     {
-        $this->id = $id;
+        $this->primaryKey = $id;
         return $this;
     }
 
