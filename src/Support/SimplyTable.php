@@ -3,7 +3,7 @@
 namespace spimpolari\LaravelSimplyGrid\Support;
 
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Collection
+use Illuminate\Support\Collection;
 
 /**
  * Class SimplyTable
