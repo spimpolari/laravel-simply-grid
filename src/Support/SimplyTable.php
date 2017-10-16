@@ -3,7 +3,7 @@
 namespace spimpolari\LaravelSimplyGrid\Support;
 
 use Illuminate\Support\Facades\View;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection
 
 /**
  * Class SimplyTable
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 class SimplyTable {
 
     /**
-     * array of header column
+     * array of header fields
      * @var array
      */
     protected $header = [];
@@ -33,7 +33,7 @@ class SimplyTable {
      * list of field name
      * @var array
      */
-    protected $column = [];
+    protected $fields = [];
 
     /**
      * Data Collection
@@ -43,10 +43,10 @@ class SimplyTable {
 
 
     /**
-     * Mark row as special row
+     * Mark row as customField row
      * @var array
      */
-    protected $special = [];
+    protected $customField = [];
 
     /**
      * @var null
@@ -143,12 +143,12 @@ class SimplyTable {
     }
 
     /**
-     * @param $column
+     * @param $fields
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setColumn($column)
+    public function setFields($fields)
     {
-        $this->column = $column;
+        $this->fields = $fields;
         return $this;
     }
 
@@ -168,13 +168,13 @@ class SimplyTable {
      * @param $config
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setSpecial($row, $option, $config = null)
+    public function setCustomField($row, $option, $config = null)
     {
         if($option === 'anon' || $option === 'morph') {
             $this->anon = $config;
-            $this->special[$row] = array($option);
+            $this->customField[$row] = array($option);
         } else {
-            $this->special[$row] = array($option, $config);
+            $this->customField[$row] = array($option, $config);
         }
         return $this;
     }
@@ -261,12 +261,12 @@ class SimplyTable {
 
         $list_view_var = [
             'data'=>$this->data,
-            'column'=>$this->column,
+            'fields'=>$this->fields,
             'header'=>$this->header,
             'caption'=>$this->caption,
             'table_css'=>$this->css,
             'table_id'=>$this->id,
-            'special'=>$this->special,
+            'customField'=>$this->customField,
             'action'=>$this->action,
             'primaryKey'=>$this->primaryKey,
             'anon'=>$this->anon,
