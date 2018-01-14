@@ -45,6 +45,8 @@
                             {{ date($customField[$name][1], $row->$name) }}
                         @elseif ($customField[$name][0] == 'carbon')
                             {{ $row->$name->diffForHumans() }}
+                        @elseif ($customField[$name][0] == 'translate')
+                            {{ $row->getTranslation($name, $customField[$name][1]) }}
                         @elseif ($customField[$name][0] == 'match')
                             @if (isset($customField[$name][1][$row->$name]))
                                 {{ $customField[$name][1][$row->$name] }}
@@ -52,7 +54,7 @@
                                 {{ $row->$name }}
                             @endif
                         @elseif ($customField[$name][0] == 'anon')
-                            {{ $anon($row) }}
+                            {{ $anon[$name]($row) }}
                         @endif
                     @else
                         {{ $row->$name }}

@@ -166,7 +166,7 @@ class SimplyTable {
     public function setCustomField($row, $option, $config = null)
     {
         if($option === 'anon' || $option === 'morph') {
-            $this->anon = $config;
+            $this->anon[$row] = $config;
             $this->customField[$row] = array($option);
         } else {
             $this->customField[$row] = array($option, $config);
@@ -268,6 +268,7 @@ class SimplyTable {
             'buttons'=>$this->buttons,
             'customRow'=>$this->customRow,
             'customAction'=>$this->customAction
+
         ];
 
 

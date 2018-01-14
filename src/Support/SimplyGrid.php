@@ -62,6 +62,7 @@ class SimplyGrid {
      */
     public function renderJS()
     {
+    	$option = '';
         $render = '<script type="text/javascript">'."\n";
 
         foreach ($this->table as $tableName => $object) {
@@ -69,12 +70,24 @@ class SimplyGrid {
 
             if (count($options) > 0) {
                 $option = '{';
+	            $option_datatable = '';
                 foreach ($options as $key => $val) {
-                    $option = '"' . $key . '":"' . $val . '"';
+                	switch ($val) {
+		                case '[]':
+		                case 'false':
+		                case 'true':
+		                case is_numeric($val):
+		                    $option_datatable .= '"' . $key . '":' . $val . ',';
+	                        break;
+		                default:
+	                        $option_datatable .= '"' . $key . '":"' . $val . '",';
+	                        break;
+	                }
                 }
-                $option = $option . '}';
+	            $option_datatable = substr( $option_datatable, 0, strlen($option_datatable) - 1);
+                $option .=  $option_datatable . '}';
             } else {
-                $option = '';
+                $option .= '';
             }
 
             $render .= '$(function(){$("#' . $tableName . '").DataTable(' . $option . ');});'."\n";
