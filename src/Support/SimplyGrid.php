@@ -66,8 +66,9 @@ class SimplyGrid {
         $render = '<script type="text/javascript">'."\n";
 
         foreach ($this->table as $tableName => $object) {
-            $options = $object->getDataTableOptions();
-
+        	/** @var  \spimpolari\LaravelSimplyGrid\Support\SimplyTable $object */
+	        $options = $object->getDataTableOptions();
+	        
             if (count($options) > 0) {
                 $option = '{';
 	            $option_datatable = '';
@@ -85,15 +86,35 @@ class SimplyGrid {
 	                }
                 }
 	            $option_datatable = substr( $option_datatable, 0, strlen($option_datatable) - 1);
+	
+	            if(count($object->getButton()) > 0) {
+					$option_datatable .= ', "columnDefs":[{"orderable":false, "targets":'.(count($object->getHeader()) + (($object->hasOrderColumn) ? 1 : 0) )
+					                     .'}'
+					                     .(($object->hasOrderColumn) ? ', {"orderable":false, "targets":0}' : '')
+					                     .']';
+	            }
                 $option .=  $option_datatable . '}';
             } else {
-                $option .= '';
+             
+	            if(count($object->getButton()) > 0) {
+		            $option .= '{"columnDefs":[{"orderable":false, "targets":'.(count($object->getHeader()) + (($object->hasOrderColumn) ? 1 : 0) )
+		                                 .'}'
+		                                 .(($object->hasOrderColumn) ? ', {"orderable":false, "targets":0}' : '')
+		                                 .']}';
+	            }
             }
+            
+            
 
             $render .= '$(function(){$("#' . $tableName . '").DataTable(' . $option . ');});'."\n";
+            $option_datatable = '';
+            $option = '';
         }
 
         return $render.'</script>'."\n";
     }
 
+    
+    
+    
 }

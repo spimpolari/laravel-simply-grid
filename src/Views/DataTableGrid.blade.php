@@ -4,6 +4,9 @@
     @endif
     <thead>
     <tr>
+        @isset($ordering)
+            <th></th>
+        @endisset
         @empty($buttons)
             @isset($primaryKey)
             <th>#</th>
@@ -13,7 +16,7 @@
             <th>{{$th}}</th>
         @endforeach
         @isset($buttons)
-            <th style="width: 100px; text-align: center;">Azioni</th>
+            <th style="width: 96px; text-align: right; padding-right: 14px;">Azioni</th>
         @endisset
     </tr>
     </thead>
@@ -24,6 +27,16 @@
         @else
         <tr>
         @endif
+            @isset($ordering)
+                <td style="text-align: center; vertical-align: middle; width: 36px;" class="">
+                    @if($row->buildSortQuery()->limit(1)->ordered()->first()->{$ordering['orderColumn']} !== $row->{$ordering['orderColumn']})
+                    <a href="{{ route($ordering['upRoute'], $row->{$ordering['fieldId']}) }}"><i class="fa fa-arrow-up"></i></a>&nbsp;
+                    @endif
+                    @if($row->getHighestOrderNumber() !== $row->{$ordering['orderColumn']})
+                    <a href="{{ route($ordering['downRoute'], $row->{$ordering['fieldId']}) }}"><i class="fa fa-arrow-down"></i></a>
+                    @endif
+                </td>
+            @endisset
             @empty($buttons)
                 @isset($primaryKey)
                 <td><input type="radio" value="{{$row->$primaryKey}}" name="id"></td>
@@ -63,7 +76,7 @@
             @endforeach
 
             @if(isset($buttons))
-                <td style="text-align: center;" class="action">
+                <td style="text-align: right; vertical-align: middle; width: 96px;" class="action">
                 @foreach($buttons as $button)
                     @if(isset($customAction))
                         @if($customAction($button, $row))
@@ -76,9 +89,10 @@
                 </td>
             @else
                 @isset($action)
-                <td style="text-align: center;" class="action">@include($action)</td>
+                <td style="text-align: center; vertical-align: middle; width: 96px;" class="action">@include($action)</td>
                 @endisset
             @endif
+
         </tr>
     @endforeach
     </tbody>

@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
  */
 class SimplyTable {
 
+	public $hasOrderColumn = false;
     /**
      * array of header fields
      * @var array
@@ -86,6 +87,11 @@ class SimplyTable {
      * @var array
      */
     protected $dataTableOptions = [];
+	
+	/**
+	 * @var array
+	 */
+    protected $ordering = null;
 
 
     /**
@@ -236,10 +242,37 @@ class SimplyTable {
     {
         return $this->dataTableOptions;
     }
+	
+	/**
+	 * @return null
+	 */
+    public function getButton()
+    {
+    	return $this->buttons;
+    }
+    
+    public function getHeader()
+    {
+    	return $this->header;
+    }
+	
+	/**
+	 * @param $orderUpRoute
+	 * @param $orderDownRoute
+	 * @param $fieldName
+	 */
+    public function setOrderField($orderUpRoute, $orderDownRoute, $fieldId, $order_column = 'order_column' )
+    {
+    	$this->ordering['upRoute'] = $orderUpRoute;
+    	$this->ordering['downRoute'] = $orderDownRoute;
+    	$this->ordering['fieldId'] = $fieldId;
+	    $this->ordering['orderColumn'] = $order_column;
+	    $this->hasOrderColumn = true;
+	    
+	    return $this;
+    }
 
-
-
-
+    
     /**
      * @return string
      */
@@ -267,7 +300,8 @@ class SimplyTable {
             'anon'=>$this->anon,
             'buttons'=>$this->buttons,
             'customRow'=>$this->customRow,
-            'customAction'=>$this->customAction
+            'customAction'=>$this->customAction,
+	        'ordering' => $this->ordering
 
         ];
 
