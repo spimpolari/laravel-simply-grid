@@ -55,7 +55,8 @@
                                 {{ $row->{$customField[$name][1][0]}->{$customField[$name][1][1]} }}
                             @endif
                         @elseif ($customField[$name][0] == 'timestamp')
-                            {{ date($customField[$name][1], $row->$name) }}
+
+                            {{ $row->$name->format($customField[$name][1]) }}
                         @elseif ($customField[$name][0] == 'carbon')
                             {{ $row->$name->diffForHumans() }}
                         @elseif ($customField[$name][0] == 'translate')
