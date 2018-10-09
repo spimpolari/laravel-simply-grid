@@ -39,7 +39,11 @@
             @endisset
             @empty($buttons)
                 @isset($primaryKey)
-                <td><input type="radio" value="{{$row->$primaryKey}}" name="id"></td>
+                    @if($selectionInput == 'radio')
+                        <td><input type="radio" value="{{$row->$primaryKey}}" name="id"></td>
+                        @elseif($selectionInput == 'check')
+                        <td><input type="checkbox" value="{{$row->$primaryKey}}" name="id[]"></td>
+                        @endif
                 @endisset
             @endempty
 
@@ -55,7 +59,6 @@
                                 {{ $row->{$customField[$name][1][0]}->{$customField[$name][1][1]} }}
                             @endif
                         @elseif ($customField[$name][0] == 'timestamp')
-
                             {{ $row->$name->format($customField[$name][1]) }}
                         @elseif ($customField[$name][0] == 'carbon')
                             {{ $row->$name->diffForHumans() }}

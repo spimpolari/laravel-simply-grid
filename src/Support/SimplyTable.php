@@ -82,6 +82,12 @@ class SimplyTable {
      * @var string
      */
     protected $primaryKey = null;
+	
+	/**
+	 * check type
+	 * @var null
+	 */
+	protected $selectionInput = null;
 
     /**
      * @var array
@@ -137,9 +143,10 @@ class SimplyTable {
      * @param $id
      * @return \spimpolari\LaravelSimplyGrid\Support\SimplyTable
      */
-    public function setPrimaryKey($id = 'id')
+    public function setPrimaryKey($id = 'id', $selectionInput = 'radio')
     {
         $this->primaryKey = $id;
+        $this->selectionInput = $selectionInput;
         return $this;
     }
 
@@ -301,7 +308,8 @@ class SimplyTable {
             'buttons'=>$this->buttons,
             'customRow'=>$this->customRow,
             'customAction'=>$this->customAction,
-	        'ordering' => $this->ordering
+	        'ordering' => $this->ordering,
+	        'selectionInput' => $this->selectionInput
 
         ];
 
