@@ -75,7 +75,7 @@ class SimplyTable {
     /**
      *
      */
-    protected $buttons = null;
+    protected $buttons = [];
 
     /**
      * primary key

@@ -15,9 +15,9 @@
         @foreach($header as $th)
             <th>{{$th}}</th>
         @endforeach
-        @isset($buttons)
+        @if(isset($buttons) && count($buttons) > 0)
             <th style="width: 96px; text-align: right; padding-right: 14px;">Azioni</th>
-        @endisset
+        @endif
     </tr>
     </thead>
     <tbody>
