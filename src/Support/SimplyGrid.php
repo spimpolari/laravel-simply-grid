@@ -87,7 +87,7 @@ class SimplyGrid {
                 }
 	            $option_datatable = substr( $option_datatable, 0, strlen($option_datatable) - 1);
 	
-                debugbar()->addMessage($object->getButton());
+                //debugbar()->addMessage($object->getButton());
 	            if(count($object->getButton()) > 0) {
 					$option_datatable .= ', "columnDefs":[{"orderable":false, "targets":'.(count($object->getHeader()) + (($object->hasOrderColumn) ? 1 : 0) )
 					                     .'}'
